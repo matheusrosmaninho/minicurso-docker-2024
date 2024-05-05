@@ -1,5 +1,8 @@
 <?php
+
 require_once __DIR__ . "/vendor/autoload.php";
+require_once __DIR__ . "/conexao.php";
+require_once __DIR__ . "/classes/Pedidos.php";
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -9,25 +12,11 @@ $dbName = $_ENV['POSTGRES_DB'];
 $dbPassword = $_ENV['POSTGRES_PASSWORD'];
 $dbHost = $_ENV['POSTGRES_HOST'];
 
-function connect($dbHost, $dbName, $dbUser, $dbPassword): PDO {
-    try {
-        $dsn = "pgsql:host=$dbHost;port=5432;dbname=$dbName;";
-        return new PDO($dsn, $dbUser, $dbPassword, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    } catch(PDOException $e) {
-        die($e->getMessage());
-    }
-}
-
 $conexao = connect($dbHost, $dbName, $dbUser, $dbPassword);
 
+$objPedidos = new Pedidos($conexao);
 $faker = Faker\Factory::create();
 
-$sql = 'insert into pedidos(nome, valor) values(:nome, :valor)';
-$stmt = $conexao->prepare($sql);
-
-$stmt->bindValue(':nome', $faker->name);
-$stmt->bindValue(':valor', $faker->randomFloat(2, 10, 1000));
-$stmt->execute();
-$id = $conexao->lastInsertId();
+$id = $objPedidos->inserirPedido($faker->name, $faker->randomFloat(2, 10, 1000));
 
 print_r($id);
