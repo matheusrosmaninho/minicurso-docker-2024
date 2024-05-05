@@ -33,7 +33,7 @@ RUN apk update && apk add --no-cache git \
     php83-phar \
     php83-iconv
 
-RUN docker-php-ext-install pdo pdo_pgsql
+RUN docker-php-ext-configure intl && docker-php-ext-install pdo pdo_pgsql intl
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 

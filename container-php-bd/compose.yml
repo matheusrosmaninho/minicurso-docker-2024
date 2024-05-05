@@ -31,7 +31,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
     volumes:
       - data_db:/var/lib/postgresql/data
-      - ./postgres/pedido.sql:/docker-entrypoint-initdb.d/pedido.sql
+      - ./postgres/produtos.sql:/docker-entrypoint-initdb.d/produtos.sql
 
 
 networks:

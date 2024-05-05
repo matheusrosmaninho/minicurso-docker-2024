@@ -4,7 +4,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use Aura\SqlQuery\QueryFactory;
 
-class Pedidos
+class Produtos
 {
     private PDO|null $conexao;
 
@@ -16,11 +16,11 @@ class Pedidos
         $this->queryFactory = new QueryFactory('pgsql');
     }
 
-    public function inserirPedido(string $nome, float $valor): int
+    public function inserirProduto(string $nome, float $valor): int
     {
         $insert = $this->queryFactory->newInsert();
         $insert
-            ->into('pedidos')
+            ->into('produtos')
             ->cols([
                 'nome' => $nome,
                 'valor' => $valor
@@ -34,5 +34,17 @@ class Pedidos
 
         $stmt->execute($insert->getBindValues());
         return $this->conexao->lastInsertId();
+    }
+
+    public function listarProdutos(): array
+    {
+        $select = $this->queryFactory->newSelect();
+        $select
+            ->cols(['*'])
+            ->from('produtos');
+
+        $stmt = $this->conexao->prepare($select->getStatement());
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
