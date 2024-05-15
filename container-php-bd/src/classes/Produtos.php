@@ -47,4 +47,30 @@ class Produtos
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deletarProduto(int $id): bool
+    {
+        $delete = $this->queryFactory->newDelete();
+        $delete
+            ->from('produtos')
+            ->where('id = :id')
+            ->bindValue('id', $id);
+
+        $stmt = $this->conexao->prepare($delete->getStatement());
+        return $stmt->execute($delete->getBindValues());
+    }
+
+    public function getById(int $id) {
+        $search = $this->queryFactory->newSelect();
+
+        $search
+            ->cols(['*'])
+            ->from('produtos')
+            ->where('id = :id')
+            ->bindValue('id', $id);
+
+        $stmt = $this->conexao->prepare($search->getStatement());
+        $stmt->execute($search->getBindValues());
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
