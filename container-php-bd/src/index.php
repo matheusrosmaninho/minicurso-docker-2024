@@ -15,12 +15,29 @@ $message = '';
 $conexao = connect($dbHost, $dbName, $dbUser, $dbPassword);
 $objPedidos = new Produtos($conexao);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$produto = [];
+
+if (!empty($_GET['id'])) {
+    $id = $_GET['id'];
+    $produto = $objPedidos->getById($id);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_GET['id'])) {
     $nome = $_POST['nome'];
     $valor = $_POST['valor'];
 
     $id = $objPedidos->inserirProduto($nome, $valor);
     $message = "Produto inserido com sucesso";
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['id'])) {
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $valor = $_POST['valor'];
+
+    $objPedidos->atualizarProduto($id, $nome, $valor);
+    $message = "Produto atualizado com sucesso";
+    $produto = [];
 }
 
 $produtos = $objPedidos->listarProdutos();
@@ -30,4 +47,5 @@ $twig = new \Twig\Environment($loader);
 echo $twig->render('index.html', [
     'produtos' => $produtos,
     'message' => $message,
+    'produto' => $produto,
 ]);

@@ -36,17 +36,19 @@
                 </div>
                 {% endif %}
                 <h1 class="display-3">Produtos</h1>
+                <a href="/" class="btn btn-primary">Novo produto</a>
 
                 <form method="post">
+                    <input type="hidden" name="id" value="{{ produto.id }}">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome do produto</label>
-                        <input type="text" name="nome" class="form-control" id="nome">
+                        <input type="text" name="nome" class="form-control" id="nome" value="{{ produto.nome }}">
                     </div>
                     <div class="mb-3">
                         <label for="valor" class="form-label">Valor</label>
-                        <input type="number" min="1" name="valor" step="any" class="form-control" id="valor">
+                        <input type="number" min="1" name="valor" step="any" class="form-control" id="valor" value="{{ produto.valor }}">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
             </div>
             <br />
@@ -73,7 +75,8 @@
                             <td class="product-name">{{ produto.nome }}</td>
                             <td>{{ produto.valor }}</td>
                             <td>
-                                <a href="" class="btn btn-danger delete-button" data-id="{{ produto.id }}">Deletar</a>
+                                <a href="?id={{ produto.id }}" class="btn btn-primary" title="Editar" alt="Editar" data-id="{{ produto.id }}">Editar</a>
+                                <a href="" class="btn btn-danger delete-button" title="Deletar" alt="Deletar" data-id="{{ produto.id }}">Deletar</a>
                             </td>
                         </tr>
                         {% endfor %}

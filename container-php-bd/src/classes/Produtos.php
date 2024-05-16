@@ -41,7 +41,8 @@ class Produtos
         $select = $this->queryFactory->newSelect();
         $select
             ->cols(['*'])
-            ->from('produtos');
+            ->from('produtos')
+            ->orderBy(['id ASC']);
 
         $stmt = $this->conexao->prepare($select->getStatement());
         $stmt->execute();
@@ -72,5 +73,21 @@ class Produtos
         $stmt = $this->conexao->prepare($search->getStatement());
         $stmt->execute($search->getBindValues());
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function atualizarProduto(int $id, string $nome, float $valor): bool
+    {
+        $update = $this->queryFactory->newUpdate();
+        $update
+            ->table('produtos')
+            ->cols([
+                'nome' => $nome,
+                'valor' => $valor
+            ])
+            ->where('id = :id')
+            ->bindValue('id', $id);
+
+        $stmt = $this->conexao->prepare($update->getStatement());
+        return $stmt->execute($update->getBindValues());
     }
 }
