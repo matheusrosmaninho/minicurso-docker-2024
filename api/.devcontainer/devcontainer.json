@@ -12,5 +12,6 @@
     "runServices": [
         "db",
         "proxy"
-    ]
+    ],
+    "postCreateCommand": "docker compose -f ../compose.infra.yml up --no-start"
 }
