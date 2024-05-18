@@ -1,0 +1,6 @@
+http:
+  middlewares:
+    only-machine:
+      IPAllowList:
+        sourceRange:
+          - "172.20.0.0/24"
