@@ -13,6 +13,7 @@ services:
       POSTGRES_DB: produtos
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./db/produtos.sql:/docker-entrypoint-initdb.d/produtos.sql
 
 volumes:
   db_data:

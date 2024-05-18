@@ -8,7 +8,9 @@ ENV GID=${GID:-1000}
 
 RUN apk update && apk add --no-cache curl \
     wget \
-    git
+    postgresql-dev
+
+RUN docker-php-ext-install pdo pdo_pgsql
 
 COPY --from=composer:2.7.6 /usr/bin/composer /usr/bin/composer
 

@@ -2,8 +2,13 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use App\Controller\ProdutoController;
+use App\Classes\Connection;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
 
 // Instantiate App
 $app = AppFactory::create();
@@ -13,13 +18,11 @@ $app->addErrorMiddleware(true, true, true);
 
 // Add routes
 $app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write('<a href="/hello/world">Try /hello/world</a>');
-    return $response;
-});
+    $objProdutoController = new ProdutoController();
 
-$app->get('/hello/{name}', function (Request $request, Response $response, $args) {
-    $name = $args['name'];
-    $response->getBody()->write("Hello, $name");
+    $produtos = $objProdutoController->index();
+    $response = $response->withHeader('Content-Type', 'application/json');
+    $response->getBody()->write(json_encode($produtos));
     return $response;
 });
 

@@ -8,13 +8,17 @@
     "nyholm/psr7-server": "^1.1",
     "guzzlehttp/psr7": "^2",
     "laminas/laminas-diactoros": "^3.3",
-    "vlucas/phpdotenv": "^5.6"
+    "vlucas/phpdotenv": "^5.6",
+    "ramsey/uuid": "^4.7",
+    "aura/sqlquery": "^3.0"
   },
   "autoload": {
     "psr-4": {
       "App\\": "./",
       "App\\Controller\\": "./controllers/",
-      "App\\Classes\\": "./classes/"
+      "App\\Classes\\": "./classes/",
+      "App\\Entities\\": "./entities/",
+      "App\\Models\\": "./models/"
     }
   }
 }
