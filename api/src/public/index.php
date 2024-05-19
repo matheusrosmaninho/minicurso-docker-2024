@@ -26,4 +26,14 @@ $app->get('/produtos', function (Request $request, Response $response) {
     return $response;
 });
 
+$app->post('/produtos', function (Request $request, Response $response) {
+    $objProdutoController = new ProdutoController();
+
+    $produto = $objProdutoController->store($request->getParsedBody());
+    $response = $response->withHeader('Content-Type', 'application/json');
+    $response = $response->withStatus(201);
+    $response->getBody()->write(json_encode($produto));
+    return $response;
+});
+
 $app->run();

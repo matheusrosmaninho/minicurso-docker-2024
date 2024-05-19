@@ -29,4 +29,24 @@ class Produto
         $sth->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, \App\Entities\Produto::class);
         return $sth->fetchAll();
     }
+
+    public function create(\App\Entities\Produto $produto): \App\Entities\Produto
+    {
+        $produto->setId((string) \Ramsey\Uuid\Rfc4122\UuidV4::uuid4());
+        $insert = $this->queryFactory->newInsert();
+        $insert->into('produtos')
+            ->cols([
+                'id' => $produto->getId(),
+                'nome' => $produto->getNome(),
+                'valor' => $produto->getValor()
+            ]);
+
+        $sth = $this->connection->prepare($insert->getStatement());
+        $result = $sth->execute($insert->getBindValues());
+        if (!$result) {
+            throw new \RuntimeException('Erro ao inserir o produto');
+        }
+        return $produto;
+    }
+
 }
