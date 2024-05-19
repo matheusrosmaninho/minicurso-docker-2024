@@ -1,0 +1,17 @@
+{
+    "name": "Nome do seu Dev Container",
+    "dockerComposeFile": [
+        "../compose.infra.yml",
+        "../compose.proxy.yml",
+        "../compose.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/app",
+    "remoteUser": "appuser",
+    "shutdownAction": "stopCompose",
+    "runServices": [
+        "db",
+        "proxy"
+    ],
+    "postCreateCommand": "docker compose -f ../compose.infra.yml up --no-start"
+}

@@ -1,0 +1,14 @@
+http:
+  routers:
+    to-app:
+      rule: "Host(`app.localhost`)"
+      service: app
+      priority: 30
+      middlewares:
+        - "only-machine"
+
+  services:
+    app:
+      loadBalancer:
+        servers:
+          - url: "http://app:8000"

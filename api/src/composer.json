@@ -1,0 +1,24 @@
+{
+  "require": {
+    "slim/slim": "^4.13",
+    "psr/http-message": "^1.0",
+    "slim/http": "1.3",
+    "slim/psr7": "^1.6",
+    "nyholm/psr7": "^1.8",
+    "nyholm/psr7-server": "^1.1",
+    "guzzlehttp/psr7": "^2",
+    "laminas/laminas-diactoros": "^3.3",
+    "vlucas/phpdotenv": "^5.6",
+    "ramsey/uuid": "^4.7",
+    "aura/sqlquery": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "./",
+      "App\\Controller\\": "./controllers/",
+      "App\\Classes\\": "./classes/",
+      "App\\Entities\\": "./entities/",
+      "App\\Models\\": "./models/"
+    }
+  }
+}

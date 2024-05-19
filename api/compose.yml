@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+      args:
+        UUID: ${UUID}
+        GID: ${GID}
+    expose:
+      - 8000
+    deploy:
+      replicas: 1
+    volumes:
+      - ./src:/app
+
+networks:
+  default:
+    name: api
+    external: true

@@ -1,0 +1,23 @@
+services:
+  proxy:
+    container_name: proxy
+    image: traefik:3.0.0
+    expose:
+      - 80
+      - 8080
+    ports:
+      - 80:80
+      - 8080:8080
+    command: --api.insecure=true --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/conf:/etc/traefik/conf:ro
+    networks:
+      default:
+        ipv4_address: 172.20.0.120
+
+networks:
+  default:
+    name: api
+    external: true
