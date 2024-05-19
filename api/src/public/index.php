@@ -17,7 +17,7 @@ $app = AppFactory::create();
 $app->addErrorMiddleware(true, true, true);
 
 // Add routes
-$app->get('/', function (Request $request, Response $response) {
+$app->get('/produtos', function (Request $request, Response $response) {
     $objProdutoController = new ProdutoController();
 
     $produtos = $objProdutoController->index();

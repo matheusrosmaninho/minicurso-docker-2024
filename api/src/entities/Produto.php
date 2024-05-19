@@ -1,8 +1,11 @@
 <?php
 namespace App\Entities;
 
-class Produto implements \JsonSerializable {
-    private int $id;
+use Ramsey\Uuid\Rfc4122\UuidV4;
+
+class Produto implements \JsonSerializable
+{
+    private string $id;
     private string $nome;
     private float $valor;
 
