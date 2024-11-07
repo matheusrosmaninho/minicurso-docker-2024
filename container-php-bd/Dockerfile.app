@@ -31,9 +31,21 @@ RUN apk update && apk add --no-cache git \
     php83-openssl \
     php83-json \
     php83-phar \
-    php83-iconv
+    php83-iconv \
+    php83-mbstring \
+    libxml2-dev \
+    freetype \
+    libjpeg-turbo \
+    libpng \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev
 
-RUN docker-php-ext-configure intl && docker-php-ext-install pdo pdo_pgsql intl
+RUN docker-php-ext-configure gd
+RUN docker-php-ext-install pdo pdo_pgsql intl soap zip
+RUN docker-php-ext-install  -j$(nproc) gd
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-enable gd
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
